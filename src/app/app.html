@@ -1,0 +1,76 @@
+<div class="dashboard-wrapper">
+  <!-- Header Component -->
+  <app-header></app-header>
+
+  <!-- Filter Bar Component -->
+  <app-filter-bar 
+    (filterChanged)="onFilterChanged($event)"
+    (addHotelTriggered)="onAddHotelTriggered()">
+  </app-filter-bar>
+
+  <!-- Error Banner -->
+  <div class="error-banner apple-glass" *ngIf="errorMessage">
+    <span class="error-icon">⚠️</span>
+    <div class="error-message-content">
+      <strong>Connection Error:</strong> {{ errorMessage }}
+    </div>
+    <button class="error-close-btn" (click)="clearError()">✕</button>
+  </div>
+
+  <!-- Main Grid Area -->
+  <main class="grid-container">
+    <div class="loading-container" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Updating LuxeBook catalog...</p>
+    </div>
+
+    <div class="empty-state apple-glass" *ngIf="!loading && filteredHotels.length === 0">
+      <span class="empty-icon">📂</span>
+      <h3>No hotels found</h3>
+      <p>Try resetting the search filters or add a new hotel listing.</p>
+    </div>
+
+    <div class="hotels-grid" *ngIf="!loading && filteredHotels.length > 0">
+      <app-hotel-card 
+        *ngFor="let item of filteredHotels" 
+        [hotel]="item"
+        (viewDetails)="onViewDetails($event)">
+      </app-hotel-card>
+    </div>
+  </main>
+
+  <!-- Pagination Footer -->
+  <footer class="pagination-footer" *ngIf="totalPages > 1 && !loading">
+    <button 
+      class="btn-secondary nav-btn" 
+      [disabled]="currentPage === 1" 
+      (click)="onPageChange(currentPage - 1)">
+      ← Previous
+    </button>
+    
+    <span class="page-indicator">
+      Page <strong>{{ currentPage }}</strong> of <strong>{{ totalPages }}</strong>
+    </span>
+    
+    <button 
+      class="btn-secondary nav-btn" 
+      [disabled]="currentPage === totalPages" 
+      (click)="onPageChange(currentPage + 1)">
+      Next →
+    </button>
+  </footer>
+
+  <!-- Details Modal Overlay -->
+  <app-hotel-modal 
+    *ngIf="showDetailsModal" 
+    [hotel]="selectedHotel"
+    (close)="showDetailsModal = false">
+  </app-hotel-modal>
+
+  <!-- Add Hotel Form Modal Overlay -->
+  <app-add-hotel-modal 
+    *ngIf="showAddModal"
+    (close)="showAddModal = false"
+    (save)="onSaveHotel($event)">
+  </app-add-hotel-modal>
+</div>
