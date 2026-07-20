@@ -1,0 +1,85 @@
+<div class="modal-overlay" [ngClass]="{'is-closing': isClosing()}" (click)="onClose()">
+  <div class="apple-glass modal-container" [ngClass]="{'is-closing': isClosing()}" (click)="$event.stopPropagation()">
+    <!-- Close Button -->
+    <button class="close-btn" (click)="onClose()">✕</button>
+    
+    <div class="modal-content" *ngIf="hotel(); else loading">
+      <!-- Modal Hero Image -->
+      <div class="modal-hero-container">
+        <img [src]="getHotelImage(hotel()?.name)" class="modal-hero-image" alt="Hotel Hero" />
+      </div>
+      
+      <div class="modal-header">
+        <span class="hotel-type-badge">{{ hotel()?.hotelType || 'Hotel' }}</span>
+        <h2 class="hotel-name">{{ hotel()?.name }}</h2>
+        <p class="hotel-address">📍 {{ hotel()?.address }}</p>
+        <div class="header-stats">
+          <span class="star-rating" *ngIf="hotel()?.hotelStarRating">⭐ {{ hotel()?.hotelStarRating }}</span>
+          <span class="review-count" *ngIf="hotel()?.reviewCount">Based on {{ hotel()?.reviewCount }} reviews</span>
+        </div>
+      </div>
+
+      <div class="modal-body-grid">
+        <!-- Left Panel: Info & Amenities -->
+        <div class="details-left">
+          <div class="info-section">
+            <h4>About</h4>
+            <p>This property is located in the <strong>{{ hotel()?.area || hotel()?.city }}</strong> area.</p>
+            <div class="location-links">
+              <a *ngIf="hotel()?.lat && hotel()?.long" [href]="'https://www.google.com/maps/search/?api=1&query=' + hotel()?.lat + ',' + hotel()?.long" target="_blank" class="map-link">
+                📍 View Co-ordinates ➔
+              </a>
+              <a [href]="hotel()?.pageUrl" target="_blank" class="booking-link">
+                🌐 View on Booking.com ➔
+              </a>
+            </div>
+          </div>
+
+          <div class="amenities-section" *ngIf="hotel()?.amenities">
+            <h4>Amenities</h4>
+            <div class="amenities-list">
+              <span class="amenity-badge" *ngFor="let item of parseAmenities(hotel()?.amenities)">
+                {{ item }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel: Ratings Breakdown -->
+        <div class="details-right">
+          <div class="score-card">
+            <div class="main-score">
+              <span class="score-num">{{ hotel()?.averageRating?.toFixed(1) || 'N/A' }}</span>
+              <div class="score-label">
+                <span class="score-text">{{ getRatingVerdict(hotel()?.averageRating) }}</span>
+                <span class="score-photos">📸 {{ hotel()?.photoCount || 0 }} photos</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-ratings progress bars -->
+          <div class="sub-ratings-list" *ngIf="hotel() as h">
+            <h4>Ratings breakdown</h4>
+            
+            <div class="rating-row" *ngFor="let item of getSubRatings(h)">
+              <div class="rating-info">
+                <span class="rating-label">{{ item.label }}</span>
+                <span class="rating-val">{{ item.value?.toFixed(1) || 'N/A' }}</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-bar" [style.width.%]="(item.value || 0) * 10"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #loading>
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading hotel details...</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

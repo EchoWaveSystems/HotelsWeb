@@ -1,0 +1,49 @@
+<div class="login-wrapper">
+  <div class="apple-glass login-card">
+    <div class="brand-header">
+      <span class="brand-logo">🔑</span>
+      <h2>LuxeBook Catalog</h2>
+      <p>Log in with your administrator account to access hotel configurations.</p>
+    </div>
+
+    <!-- Error Alert banner -->
+    <div class="error-alert" *ngIf="errorMessage()">
+      ⚠️ {{ errorMessage() }}
+    </div>
+
+    <form (submit)="onSubmit(); $event.preventDefault()">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          [ngModel]="email()" 
+          (ngModelChange)="email.set($event)"
+          required 
+          placeholder="admin@luxebook.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          [ngModel]="password()" 
+          (ngModelChange)="password.set($event)"
+          required 
+          placeholder="Enter password" />
+      </div>
+
+      <button type="submit" class="btn-primary login-btn" [disabled]="loading()">
+        <span *ngIf="!loading()">Log In</span>
+        <span *ngIf="loading()">Authenticating...</span>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Protected session. Outbound actions are signed dynamically.</p>
+    </div>
+  </div>
+</div>

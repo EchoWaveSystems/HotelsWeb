@@ -1,0 +1,33 @@
+<div class="apple-glass-interactive card-container" (click)="onCardClick()">
+  <!-- Card Image -->
+  <div class="card-image-placeholder" [ngStyle]="{'background': getSoftGradient(hotel().name)}">
+    <img [src]="getHotelImage(hotel().name)" class="card-image" alt="Hotel Photo" />
+    <div class="star-rating-badge" *ngIf="hotel().hotelStarRating">
+      {{ cleanStarRating(hotel().hotelStarRating) }}
+    </div>
+  </div>
+  
+  <!-- Card Body -->
+  <div class="card-body">
+    <div class="card-header">
+      <h3 class="card-title">{{ hotel().name }}</h3>
+      <div class="rating-badge" [ngClass]="getRatingClass(hotel().averageRating)">
+        {{ hotel().averageRating?.toFixed(1) || 'N/A' }}
+      </div>
+    </div>
+    
+    <p class="card-location">📍 {{ hotel().city }}<span *ngIf="hotel().address"> — {{ getShortAddress(hotel().address) }}</span></p>
+    
+    <!-- Amenities List (First 3) -->
+    <div class="amenities-tags" *ngIf="hotel().amenities">
+      <span class="amenity-tag" *ngFor="let tag of getAmenities(hotel().amenities)">
+        {{ tag }}
+      </span>
+    </div>
+    
+    <div class="card-footer">
+      <span class="reviews-count" *ngIf="hotel().reviewCount">{{ hotel().reviewCount }} reviews</span>
+      <span class="details-link">View details ➔</span>
+    </div>
+  </div>
+</div>

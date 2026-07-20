@@ -1,0 +1,110 @@
+<div class="modal-overlay" [ngClass]="{'is-closing': isClosing()}" (click)="onClose()">
+  <div class="apple-glass modal-container" [ngClass]="{'is-closing': isClosing()}" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="onClose()">✕</button>
+    
+    <div class="modal-content">
+      <h2 class="form-title">Add New Hotel</h2>
+      <p class="form-subtitle">Insert hotel details to register in database and broadcast Kafka notify events.</p>
+      
+      <form (submit)="onSubmit(); $event.preventDefault()">
+        <!-- Form Grid -->
+        <div class="form-grid" *ngIf="hotel() as h">
+          <div class="form-group full-width">
+            <label for="name">Hotel Name *</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              [ngModel]="h.name" 
+              (ngModelChange)="hotel.update(prev => ({...prev, name: $event}))"
+              required 
+              placeholder="e.g. Grand Palace Inn" />
+          </div>
+
+          <div class="form-group">
+            <label for="city">City *</label>
+            <select 
+              id="city" 
+              name="city" 
+              [ngModel]="h.city"
+              (ngModelChange)="hotel.update(prev => ({...prev, city: $event}))"
+              required>
+              <option value="" disabled selected>Select a city</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Bangalore">Bangalore</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="starRating">Star Rating</label>
+            <select 
+              id="starRating" 
+              name="starRating" 
+              [ngModel]="h.hotelStarRating"
+              (ngModelChange)="hotel.update(prev => ({...prev, hotelStarRating: $event}))">
+              <option value=" 3-star hotel ">3 Stars</option>
+              <option value=" 4-star hotel ">4 Stars</option>
+              <option value=" 5-star hotel ">5 Stars</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="address">Full Address</label>
+            <input 
+              type="text" 
+              id="address" 
+              name="address" 
+              [ngModel]="h.address" 
+              (ngModelChange)="hotel.update(prev => ({...prev, address: $event}))"
+              placeholder="e.g. Sector-4, Safdarjung Enclave, Delhi" />
+          </div>
+
+          <div class="form-group">
+            <label for="avgRating">Average Rating (1 - 10)</label>
+            <input 
+              type="number" 
+              step="0.1" 
+              min="1" 
+              max="10" 
+              id="avgRating" 
+              name="avgRating" 
+              [ngModel]="h.averageRating" 
+              (ngModelChange)="hotel.update(prev => ({...prev, averageRating: $event}))"
+              placeholder="e.g. 8.4" />
+          </div>
+
+          <div class="form-group">
+            <label for="photoCount">Photo Count</label>
+            <input 
+              type="number" 
+              min="0" 
+              id="photoCount" 
+              name="photoCount" 
+              [ngModel]="h.photoCount" 
+              (ngModelChange)="hotel.update(prev => ({...prev, photoCount: $event}))"
+              placeholder="e.g. 24" />
+          </div>
+
+          <div class="form-group full-width">
+            <label>Select Amenities</label>
+            <div class="amenities-selection">
+              <label class="checkbox-label" *ngFor="let am of availableAmenities">
+                <input type="checkbox" [checked]="isChecked(am)" (change)="toggleAmenity(am)" />
+                <span>{{ am }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="onClose()">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="submitting()">
+            <span *ngIf="!submitting()">Create Hotel</span>
+            <span *ngIf="submitting()">Registering...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
