@@ -1,20 +1,17 @@
 <div class="apple-glass filter-container">
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input 
-      type="text" 
-      placeholder="Search by hotel name..." 
-      [ngModel]="searchQuery()"
-      (ngModelChange)="searchQuery.set($event); onFiltersChanged()"
-    />
+  <div class="control-group">
+    <label>Name</label>
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search by hotel name..." [ngModel]="searchQuery()"
+        (ngModelChange)="onSearchInput($event)" />
+    </div>
   </div>
 
   <div class="filter-controls">
     <div class="control-group">
       <label>City</label>
-      <select 
-        [ngModel]="selectedCity()" 
-        (ngModelChange)="selectedCity.set($event); onFiltersChanged()">
+      <select [ngModel]="selectedCity()" (ngModelChange)="selectedCity.set($event); onFiltersChanged()">
         <option value="">All Cities</option>
         <option value="Delhi">Delhi</option>
         <option value="Mumbai">Mumbai</option>
@@ -24,9 +21,7 @@
 
     <div class="control-group">
       <label>Sort By</label>
-      <select 
-        [ngModel]="sortBy()" 
-        (ngModelChange)="sortBy.set($event); onFiltersChanged()">
+      <select [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event); onFiltersChanged()">
         <option value="averageRating">Average Rating</option>
         <option value="reviewCount">Review Count</option>
         <option value="name">Name</option>
@@ -35,14 +30,12 @@
 
     <div class="control-group">
       <label>Direction</label>
-      <select 
-        [ngModel]="sortOrder()" 
-        (ngModelChange)="sortOrder.set($event); onFiltersChanged()">
+      <select [ngModel]="sortOrder()" (ngModelChange)="sortOrder.set($event); onFiltersChanged()">
         <option value="DESC">Descending</option>
         <option value="ASC">Ascending</option>
       </select>
     </div>
-    
+
     <button class="btn-primary add-btn" (click)="onAddHotelClick()">
       <span>+ Add Hotel</span>
     </button>

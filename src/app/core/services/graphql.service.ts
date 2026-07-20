@@ -27,11 +27,11 @@ export class GraphQLService {
     return this.query<T>(mutation, variables);
   }
 
-  getHotels(take: number, skip: number, city?: string, sortBy?: string, sortOrder?: string): Observable<PagedHotelsResponse> {
+  getHotels(take: number, skip: number, city?: string, searchQuery?: string, sortBy?: string, sortOrder?: string): Observable<PagedHotelsResponse> {
     let queryArgs = '$take: Int!, $skip: Int!';
     let hotelsArgs = 'take: $take, skip: $skip';
 
-    if (city) {
+    if (city || searchQuery) {
       queryArgs += ', $where: HotelFilterInput';
       hotelsArgs += ', where: $where';
     }
@@ -65,9 +65,19 @@ export class GraphQLService {
     `;
 
     const variables: any = { take, skip };
+    
+    const conditions: any[] = [];
     if (city) {
-      variables.where = { city: { eq: city } };
+      conditions.push({ city: { eq: city } });
     }
+    if (searchQuery) {
+      conditions.push({ name: { contains: searchQuery } });
+    }
+
+    if (conditions.length > 0) {
+      variables.where = conditions.length === 1 ? conditions[0] : { and: conditions };
+    }
+
     if (sortBy && sortOrder) {
       variables.order = [{ [sortBy]: sortOrder }];
     }

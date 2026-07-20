@@ -49,17 +49,7 @@ export class DashboardComponent implements OnInit {
     private graphqlService: GraphQLService,
     private authService: AuthService,
     private router: Router
-  ) {
-    effect(() => {
-      const query = this.searchQuery().toLowerCase();
-      const items = this.hotels();
-      if (!query) {
-        this.filteredHotels.set(items);
-      } else {
-        this.filteredHotels.set(items.filter(h => h.name && h.name.toLowerCase().includes(query)));
-      }
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.loadHotels();
@@ -75,11 +65,13 @@ export class DashboardComponent implements OnInit {
       this.pageSize(),
       skip,
       this.city() || undefined,
+      this.searchQuery() || undefined,
       this.sortBy(),
       this.sortOrder()
     ).subscribe({
       next: (data) => {
         this.hotels.set(data?.items || []);
+        this.filteredHotels.set(data?.items || []);
         this.totalCount.set(data?.totalCount || 0);
         this.loading.set(false);
       },
@@ -87,6 +79,7 @@ export class DashboardComponent implements OnInit {
         console.error('Error loading hotels', err);
         this.errorMessage.set(this.extractErrorMessage(err));
         this.hotels.set([]);
+        this.filteredHotels.set([]);
         this.totalCount.set(0);
         this.loading.set(false);
       }
@@ -96,7 +89,10 @@ export class DashboardComponent implements OnInit {
   onFilterChanged(filters: any) {
     let reloadNeeded = false;
     
-    if (this.city() !== filters.city || this.sortBy() !== filters.sortBy || this.sortOrder() !== filters.sortOrder) {
+    if (this.city() !== filters.city || 
+        this.searchQuery() !== filters.query || 
+        this.sortBy() !== filters.sortBy || 
+        this.sortOrder() !== filters.sortOrder) {
       reloadNeeded = true;
     }
 
