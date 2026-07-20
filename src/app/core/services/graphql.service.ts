@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Hotel, CreateHotelInput, PagedHotelsResponse } from '../models/hotel.model';
+import { APP_CONSTANTS } from '../config/app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GraphQLService {
-  private readonly apiUrl = 'http://localhost:5100/graphql';
+  private readonly apiUrl = APP_CONSTANTS.API_URL;
 
   constructor(private http: HttpClient) {}
 

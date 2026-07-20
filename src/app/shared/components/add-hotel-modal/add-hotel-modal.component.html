@@ -30,9 +30,7 @@
               (ngModelChange)="hotel.update(prev => ({...prev, city: $event}))"
               required>
               <option value="" disabled selected>Select a city</option>
-              <option value="Delhi">Delhi</option>
-              <option value="Mumbai">Mumbai</option>
-              <option value="Bangalore">Bangalore</option>
+              <option [value]="c" *ngFor="let c of cities">{{ c }}</option>
             </select>
           </div>
 
@@ -43,9 +41,7 @@
               name="starRating" 
               [ngModel]="h.hotelStarRating"
               (ngModelChange)="hotel.update(prev => ({...prev, hotelStarRating: $event}))">
-              <option value=" 3-star hotel ">3 Stars</option>
-              <option value=" 4-star hotel ">4 Stars</option>
-              <option value=" 5-star hotel ">5 Stars</option>
+              <option [value]="star.value" *ngFor="let star of starRatings">{{ star.label }}</option>
             </select>
           </div>
 

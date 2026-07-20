@@ -13,9 +13,7 @@
       <label>City</label>
       <select [ngModel]="selectedCity()" (ngModelChange)="selectedCity.set($event); onFiltersChanged()">
         <option value="">All Cities</option>
-        <option value="Delhi">Delhi</option>
-        <option value="Mumbai">Mumbai</option>
-        <option value="Bangalore">Bangalore</option>
+        <option [value]="c" *ngFor="let c of cities">{{ c }}</option>
       </select>
     </div>
 

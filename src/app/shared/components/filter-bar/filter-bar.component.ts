@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { APP_CONSTANTS } from '../../../core/config/app.constants';
 
 @Component({
   selector: 'app-filter-bar',
@@ -12,6 +13,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrl: './filter-bar.component.css'
 })
 export class FilterBarComponent implements OnInit, OnDestroy {
+  cities = APP_CONSTANTS.CITIES;
   searchQuery = signal<string>('');
   selectedCity = signal<string>('');
   sortBy = signal<string>('averageRating');

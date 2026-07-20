@@ -2,6 +2,7 @@ import { Component, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CreateHotelInput } from '../../../core/models/hotel.model';
+import { APP_CONSTANTS } from '../../../core/config/app.constants';
 
 @Component({
   selector: 'app-add-hotel-modal',
@@ -11,6 +12,10 @@ import { CreateHotelInput } from '../../../core/models/hotel.model';
   styleUrl: './add-hotel-modal.component.css'
 })
 export class AddHotelModalComponent {
+  cities = APP_CONSTANTS.CITIES;
+  starRatings = APP_CONSTANTS.STAR_RATINGS;
+  availableAmenities = APP_CONSTANTS.AMENITIES;
+
   submitting = signal<boolean>(false);
   isClosing = signal<boolean>(false);
 
@@ -18,22 +23,11 @@ export class AddHotelModalComponent {
     name: '',
     city: '',
     address: '',
-    hotelStarRating: ' 3-star hotel ',
+    hotelStarRating: APP_CONSTANTS.STAR_RATINGS[0].value,
     averageRating: undefined,
     photoCount: undefined,
     amenities: ''
   });
-
-  availableAmenities: string[] = [
-    'Free WiFi',
-    'Free parking',
-    'Restaurant',
-    'Room service',
-    'Pool',
-    'Gym',
-    'Bar',
-    'Air conditioning'
-  ];
 
   selectedAmenities = signal<Set<string>>(new Set<string>());
 
