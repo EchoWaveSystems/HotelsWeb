@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"leadId":{"$numberInt":"1"}},"name":"leadId_1"}],"uuid":"8c3f5fbb55d846dbb5a5e99c53980e52","collectionName":"lead_stages","type":"collection"}

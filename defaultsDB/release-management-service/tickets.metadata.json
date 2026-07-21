@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"departmentId":{"$numberInt":"1"}},"name":"departmentId_1"},{"v":{"$numberInt":"2"},"key":{"ticketNumber":{"$numberInt":"1"}},"name":"ticketNumber_1","unique":true}],"uuid":"10fdf1d79bee4d62bc1966997f217cf5","collectionName":"tickets","type":"collection"}

@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"location":{"$numberInt":"1"}},"name":"location_1"},{"v":{"$numberInt":"2"},"key":{"startDate":{"$numberInt":"1"},"endDate":{"$numberInt":"1"}},"name":"startDate_1_endDate_1"}],"uuid":"57e9a005a78445d1b0b119e206aea485","collectionName":"holidays","type":"collection"}
