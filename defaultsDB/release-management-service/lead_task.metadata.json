@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"leadId":{"$numberInt":"1"},"createdAt":{"$numberInt":"-1"}},"name":"leadId_1_createdAt_-1"}],"uuid":"c4c1536102844790918210f8e5e39fa0","collectionName":"lead_task","type":"collection"}
